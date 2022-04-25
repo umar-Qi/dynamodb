@@ -10,3 +10,12 @@ aws dynamodb create-table --table-name Employee --attribute-definitions Attribut
 
 aws dynamodb create-table --table-name Catalog --attribute-definitions AttributeName=CateId,AttributeType=N AttributeName=CateName,AttributeType=S AttributeName=CateDescription,AttributeType=S AttributeName=CateRange,AttributeType=S --key-schema AttributeName=CateId,KeyType=HASH AttributeName=CateName,KeyType=RANGE --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5 --global-secondary-indexes 'IndexName="CateGsi1",KeySchema=[{AttributeName="CateRange",KeyType="RANGE"},{AttributeName="CateDescription",KeyType="RANGE"}],Projection={ProjectionType="KEYS_ONLY"},ProvisionedThroughput={ReadCapacityUnits=5,WriteCapacityUnits=5}'
 
+# take backup of table
+
+aws dynamodb create-backup --table-name Catalog --backup-name Catalogbk
+
+# restore backup of table
+
+aws dynamodb restore-table-from-backup --target-table-name CatalogNew --backup-arn arn:aws:dynamodb:...........
+
+#here in above command put the arn link of any backup you want to restore
