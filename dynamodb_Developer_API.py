@@ -58,6 +58,8 @@ print("movies from 1999")
 response = table.query(
 	KeyConditionExpression = Key('year').eq(1999)
 	ProjectionExpression = "title,info.image,...." #optional, this for filtering result
+	ConsistentRead = True,				#optional | by default false | use for data consistency
+	ReturnConsumedCapacity = 'Total'
 )
 
 pprint.pprint(response)
