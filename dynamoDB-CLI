@@ -1,0 +1,12 @@
+#creating dynamodb table
+
+aws dynamodb create-table --table-name Productdb --attribute-definitions AttributeName=PrdId,AttributeType=N --key-schema AttributeName=PrdId,KeyType=Hash --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5
+
+#creating table with LSI (local secondary index)
+
+aws dynamodb create-table --table-name Employee --attribute-definitions AttributeName=EmpId,AttributeType=N AttributeName=EmpName,AttributeType=S AttributeName=EmpContact,AttributeType=S --key-schema AttributeName=EmpId,KeyType=HASH AttributeName=EmpName,KeyType=RANGE --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5 --local-secondary-indexes 'IndexName="Emplsi1",KeySchema=[{AttributeName="EmpId",KeyType="HASH"},{AttributeName="EmpName",KeyType="RANGE"}],Projection={ProjectionType="KEYS_ONLY"}'
+
+#create table with GSI (global secondary index)
+
+aws dynamodb create-table --table-name Catalog --attribute-definitions AttributeName=CateId,AttributeType=N AttributeName=CateName,AttributeType=S AttributeName=CateDescription,AttributeType=S AttributeName=CateRange,AttributeType=S --key-schema AttributeName=CateId,KeyType=HASH AttributeName=CateName,KeyType=RANGE --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5 --global-secondary-indexes 'IndexName="CateGsi1",KeySchema=[{AttributeName="CateRange",KeyType="RANGE"},{AttributeName="CateDescription",KeyType="RANGE"}],Projection={ProjectionType="KEYS_ONLY"},ProvisionedThroughput={ReadCapacityUnits=5,WriteCapacityUnits=5}'
+
